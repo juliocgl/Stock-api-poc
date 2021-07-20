@@ -1,0 +1,11 @@
+{
+  "name": "stock-api-poc",
+  "version": "1.0.0",
+  "description": "Proof of concept for a Stock REST API",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.13.3",
+    "uuid": "^8.3.2"
+  },
+  "author": "Julio Cesar Gomez"
+}

@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "88220197-6033-45fd-81b6-e2d52bd44578",
+		"name": "Stock REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add product stock",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"stock\": 123}"
+				},
+				"url": {
+					"raw": "localhost:3000/product/{{id}}/stock",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"{{id}}",
+						"stock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get product stock",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/product/{{id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reserve product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"pm.environment.set(\"reservationToken\", jsonData.reservation_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/product/{{id}}/reserve",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"{{id}}",
+						"reserve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unreserve product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"reservationToken\": \"{{reservationToken}}\"}"
+				},
+				"url": {
+					"raw": "localhost:3000/product/{{id}}/unreserve",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"{{id}}",
+						"unreserve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sold product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"reservationToken\": \"{{reservationToken}}\"}"
+				},
+				"url": {
+					"raw": "localhost:3000/product/{{id}}/sold",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"{{id}}",
+						"sold"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
