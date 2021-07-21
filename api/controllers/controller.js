@@ -6,7 +6,7 @@ const Reservation = mongoose.model('Reservation');
 
 // PATCH - Sets the stock that is available to be sold
 exports.setStock = (req, res) => {
-    console.log(`PATCH /product/${req.params.id}/stock - Payload:`);
+    console.log(`PATCH /product/${req.params.id}/stock - Payload: {"stock": "${req.body.stock}"}`);
 
     const add_stock = new Stock({
         _id: req.params.id,
@@ -57,8 +57,9 @@ exports.reserve = (req, res) => {
                             product_id: req.params.id,
                             reservation_token: uuidv4()
                         });
-                        new_reservation.save().then(() => {
-                            let show_reservation = new_reservation.toObject();
+                        new_reservation.save((err, reservation) => {
+                            if (err) res.send(err);
+                            let show_reservation = reservation.toObject();
                             delete show_reservation._id;
                             delete show_reservation.product_id;
                             res.json(show_reservation);
@@ -85,6 +86,7 @@ exports.unreserve = (req, res) => {
             }, {}, (err, stock) => {
                 if (err) res.send(err);
                 Reservation.findByIdAndDelete(reservation._id, (err, reservation) => {
+                    if (err) res.send(err);
                     res.sendStatus(200);
                 });
             });
@@ -107,6 +109,7 @@ exports.sell = (req, res) => {
             }, {}, (err, stock) => {
                 if (err) res.send(err);
                 Reservation.findByIdAndDelete(reservation._id, (err, reservation) => {
+                    if (err) res.send(err);
                     res.sendStatus(200);
                 });
             });
