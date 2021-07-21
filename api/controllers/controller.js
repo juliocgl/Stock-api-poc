@@ -41,6 +41,7 @@ exports.reserve = (req, res) => {
     console.log(`POST /product/${req.params.id}/reserve`);
 
     Stock.findOne({_id: req.params.id}, 'in_stock', {}, (err, stock) => {
+        if (err) res.send(err);
         if (stock != null) {
             if (stock.in_stock < 1)
                 // Not enough stock
@@ -77,6 +78,7 @@ exports.unreserve = (req, res) => {
     console.log(`POST /product/${req.params.id}/unreserve - Payload: {"reservationToken": "${req.body.reservationToken}"}`);
 
     Reservation.findOne({reservation_token: req.body.reservationToken}, '_id product_id', {}, (err, reservation) => {
+        if (err) res.send(err);
         if (reservation != null) {
             Stock.findOneAndUpdate({_id: reservation.product_id}, {
                 $inc: {
@@ -100,6 +102,7 @@ exports.sell = (req, res) => {
     console.log(`POST /product/${req.params.id}/sold - Payload: {"reservationToken": "${req.body.reservationToken}"}`);
 
     Reservation.findOne({reservation_token: req.body.reservationToken}, '_id product_id', {}, (err, reservation) => {
+        if (err) res.send(err);
         if (reservation != null) {
             Stock.findOneAndUpdate({_id: reservation.product_id}, {
                 $inc: {
